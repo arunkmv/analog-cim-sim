@@ -105,6 +105,12 @@ bool Config::apply_config() {
             std::exit(EXIT_FAILURE);
         }
 
+        mvm_profile = getConfigValue<bool>(cfg_data_, "mvm_profile", false);
+        if (mvm_profile) {
+            mvm_profile_bin_size =
+                getConfigValue<float>(cfg_data_, "mvm_profile_bin_size", 0.1);
+        }
+
         digital_only = getConfigValue<bool>(cfg_data_, "digital_only");
         if (!digital_only) {
             HRS = getConfigValue<float>(cfg_data_, "HRS");
