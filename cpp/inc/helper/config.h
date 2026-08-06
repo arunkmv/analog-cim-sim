@@ -55,7 +55,8 @@ class Config {
                         "read_disturb_mitigation_strategy",
                         "read_disturb_mitigation_fp",
                         "read_disturb_update_tolerance",
-                        "parasitics"});
+                        "parasitics",
+                        "mvm_profile"});
 
     // Matrix dimensions MxN
     uint32_t M;
