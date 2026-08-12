@@ -12,9 +12,9 @@
 
 namespace nq {
 
-Config::~Config() {}
-
 Config::Config() {}
+
+Config::~Config() {}
 
 // Read parameter from JSON config file
 // If the parameter is not found, return the default value if provided.
