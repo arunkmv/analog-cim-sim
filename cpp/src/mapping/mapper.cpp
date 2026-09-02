@@ -480,7 +480,7 @@ bool Mapper::is_diff_weight_mapping() const { return is_diff_weight_mapping_; }
 
 void Mapper::slice_vd(std::vector<int32_t> &vd, std::vector<int32_t> &vd_slice,
                       size_t n, size_t i_bit) {
-    std::transform(std::execution::par, vd.begin(), vd.begin() + n,
+    std::transform(std::execution::unseq, vd.begin(), vd.begin() + n,
                    vd_slice.begin(),
                    [i_bit](int32_t v) { return (v >> i_bit) & 1; });
 }
@@ -508,10 +508,10 @@ float Mapper::get_average_cell_value(
 
     auto reduce_matrix = [&](const std::vector<std::vector<int32_t>> &matrix) {
         sum += std::transform_reduce(
-            std::execution::par, matrix.begin(), matrix.begin() + m_matrix, 0.0,
+            std::execution::unseq, matrix.begin(), matrix.begin() + m_matrix, 0.0,
             std::plus<>{}, [&](const std::vector<int32_t> &row) {
                 return std::transform_reduce(
-                    std::execution::par, row.begin(), row.begin() + n_matrix,
+                    std::execution::unseq, row.begin(), row.begin() + n_matrix,
                     0.0, std::plus<>{}, [&](int32_t value) {
                         return (static_cast<double>(value) -
                                 static_cast<double>(min_val)) /
@@ -548,7 +548,7 @@ float Mapper::get_average_input_value(
     std::int64_t count = 0;
 
     auto reduce_vector = [&](const std::vector<int32_t> &vec) {
-        sum += std::transform_reduce(std::execution::par, vec.begin(),
+        sum += std::transform_reduce(std::execution::unseq, vec.begin(),
                                      vec.begin() + n_matrix, 0.0, std::plus<>{},
                                      [&](int32_t value) {
                                          return (static_cast<double>(value) -
